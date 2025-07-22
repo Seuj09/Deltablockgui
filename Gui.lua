@@ -2,17 +2,17 @@ local player = game.Players.LocalPlayer
 local gui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
 gui.Name = "ExecutorBlockNotice"
 gui.IgnoreGuiInset = true
-gui.DisplayOrder = 1000
+gui.DisplayOrder = 5000
 gui.ResetOnSpawn = false
 
 -- FULLSCREEN BACKGROUND BLOCKER
 local fullscreen = Instance.new("Frame", gui)
 fullscreen.Size = UDim2.new(1, 0, 1, 0)
 fullscreen.Position = UDim2.new(0, 0, 0, 0)
-fullscreen.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+fullscreen.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 fullscreen.BackgroundTransparency = 0.4
 fullscreen.BorderSizePixel = 0
-fullscreen.ZIndex = 1
+fullscreen.ZIndex = 5
 
 -- Main Blocked Message
 local blockedText = Instance.new("TextLabel", gui)
