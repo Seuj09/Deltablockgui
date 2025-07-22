@@ -2,7 +2,7 @@ local player = game.Players.LocalPlayer
 local gui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
 gui.Name = "ExecutorBlockNotice"
 gui.IgnoreGuiInset = true
-gui.DisplayOrder = 9999
+gui.DisplayOrder = 1000
 gui.ResetOnSpawn = false
 
 -- FULLSCREEN BACKGROUND BLOCKER
