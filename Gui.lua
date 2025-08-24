@@ -219,3 +219,8 @@ end
 TweenService:Create(bg, TweenInfo.new(2, Enum.EasingStyle.Sine), {BackgroundTransparency = 1}):Play()
 task.wait(2)
 screenGui:Destroy()
+
+-- After loading finishes, trigger the main game script
+if getgenv and getgenv().AfterLoading then
+    getgenv().AfterLoading()
+end
